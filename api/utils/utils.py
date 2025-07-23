@@ -42,10 +42,11 @@ def norm_flow(flow):
             key, value = line.strip().split(':', 1)
             tmp_key = key.strip().lower()
             tmp_value = value.strip().lower()
-            if "stgw" in tmp_key or "waf" in tmp_key or "scanner" in tmp_key or tmp_key == "host":
+            if "stgw" in tmp_key or "sec-" in tmp_key or "eo-" in tmp_key or "cdn-" in tmp_key or "client-geo" in tmp_key or "x-forwarded" in tmp_key or "waf" in tmp_key or "scanner" in tmp_key or tmp_key == "host":
                 continue
             if tmp_value == "tag":
                 continue
+            key = key.replace("-", " ").title().replace(" ", "-")
             headers.append("{}: {}".format(key.strip(), value.strip()))
 
         new_http = "{}\n{}\n\n{}".format(first_line, "\n".join(headers), body)
